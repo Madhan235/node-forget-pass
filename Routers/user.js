@@ -36,13 +36,13 @@ router.post("/login",async(req, res)=>{
         const logUser = req.body;
         const user = await loginUser(logUser.email);
         if(!user){
-            return res.status(400).json({data:{message:"InValid Email, Please signup !"}})
+            return res.status(400).json({data:{error:"InValid Email, Please signup !"}})
     
         }
         const validatePass = await bcrypt.compare(logUser.password,user.password)
     
         if(!validatePass){
-            return res.status(400).json({data:{message:"InCorrect Password"}})
+            return res.status(400).json({data:{error:"InCorrect Password"}})
         }
         const token = genrateJwtToken(user._id)
         res.status(200).json({data:{message:"succefully logged-In",token:token}})

@@ -11,11 +11,11 @@ router.post("/signup", async (req, res)=>{
 const newUser = req.body;
 
 if(newUser.password === "" || newUser.email === ""){
-    return res.status(400).json({data:{message:"Invalid details"}})    
+    return res.status(400).json({data:{error:"Invalid details"}})    
 }
 const checkEmail = await loginUser(newUser.email)
 if(checkEmail){
-    return res.status(400).json({data:{message: "Sorry, Email already registered"}})
+    return res.status(400).json({data:{error:"Sorry, Email already registered"}})
 }
 
 const salt = await bcrypt.genSalt(10);

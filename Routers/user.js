@@ -29,7 +29,7 @@ const hashedUser = {...newUser,password:hashedPassword}
 }
 })
 
-router.post("/login",async(req, res)=>{
+router.post("/login", async(req, res)=>{
     
     try {
         
@@ -45,7 +45,7 @@ router.post("/login",async(req, res)=>{
             return res.status(400).json({data:{error:"InCorrect Password"}})
         }
         const token = genrateJwtToken(user._id)
-        res.status(200).json({data:{message:"succefully logged-In",token:token}})
+        res.status(200).json({data:{message:"successfully logged-In",token:token}})
 
     } catch (error) {
         console.log(error);

@@ -14,5 +14,5 @@ return client.db("bwd45")
 }
 
 export function genrateJwtToken(id){
-    return jwt.sign({id},process.env.secretKey, {expiresIn:"30d"})
+    return jwt.sign({id},"secretkey", {expiresIn:"30d"})
 }

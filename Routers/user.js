@@ -1,5 +1,5 @@
 import express from 'express';
-import {genrateJwtToken, genrateResetToken, loginUser, signUpUser, updatePassword  } from '../logics/user.js';
+import {findUserbyId, genrateJwtToken, genrateResetToken, loginUser, signUpUser, updatePassword  } from '../logics/user.js';
 import bcrypt from 'bcrypt';
 import { mail } from '../logics/mailer.js';
 // import transporter from '../logics/mailer.js';
@@ -54,23 +54,39 @@ const user = await loginUser(req.body.email);
 router.post("/forget-password",async (req,res)=>{
 
 try {
-    const email = req.body.email;
-     const resetToken = genrateResetToken(email);
-    mail(email,resetToken);
+    const {email} = req.body.email;
+    const user = await loginUser(email);
+ if(!user){
+ return res.status(400).json({data:{error:"InValid Email, Please signup !"}})
+ }
+      const code = Math.round(Math.random()*10000+1111)
+      mail(email,code);
+   res.status(200).json({data:{code:code,message:"verification email sent"}})   
      
-res.status(200).json({data:{message:"email sent", code:vcode}})
-
 } catch (error) {
     console.log(error);
-    res.status(400).json({data:err})
-
+    res.status(400).json({data:error})
 }
 })
 
-router.post("/reset-password",async (req,res)=>{
+router.get("/reset-password/:id/:resettoken",async (req,res,next)=>{
+try {    
+    const {id,resettoken} = req.params
+ const user = findUserbyId(id)
+ if(!user){
+return res.status(400).json({data:{error:"user not found"}})
+ }
+jwt.verify(resettoken,"secretkey")
+} catch (error) {
+console.log(error)
+return res.status(400).json({data:{error:"code error"}})
+}
+next();
+})
+
+router.post("/reset-password/:id/:resettoken",async (req,res)=>{
 
     try {
-        
 const user = req.body
 if(user.password === "" ||  user.confirmPassword === ""){
   return res.status(400).json({data:{error:"invalid details"}})  

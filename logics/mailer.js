@@ -1,5 +1,6 @@
+import { link } from "fs";
 import nodemailer from "nodemailer";
-export async function mail(userEmail,resetToken){
+export function mail(userEmail,code){
 
  let transporter =
   nodemailer.createTransport({
@@ -13,8 +14,10 @@ export async function mail(userEmail,resetToken){
 let mailDetails ={
     from: 'msouljar@gmail.com',
     to: `${userEmail}`,
-    subject: 'Password Reset',
-         html: `<P>To Reset your password, click the following link : <a href="">${resetToken}</a></P>` }
+    subject: 'Verfication code',
+    text : `To Reset your password, enter the following code: 
+         ${code}` 
+       }
 
         transporter.sendMail(mailDetails, function(err){
             if(err){

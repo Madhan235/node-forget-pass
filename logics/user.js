@@ -17,11 +17,17 @@ export function genrateJwtToken(id){
     return jwt.sign({id},"secretkey", {expiresIn:"30d"})
 }
 export function genrateResetToken(email){
-    return jwt.sign({email},"secretkey", {expiresIn:"5m"})
+    return jwt.sign({email},"secretkey", {expiresIn:"15s"})
 }
 
 export function updatePassword(email,newpassword){
 return client.db("bwd45")
 .collection("users")
 .findOneAndUpdate({email:email},{$set:{password:newpassword}})
+}
+
+export function findUserbyId(id){
+    return client.db("bwd45")
+    .collection("users")
+    .findOne({id_: objectId(id)})
 }

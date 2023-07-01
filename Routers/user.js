@@ -72,25 +72,27 @@ try {
 }
 })
 
-router.get("/reset-password/:id/:resettoken",async (req,res,next)=>{
-try {    
-    const {id,resettoken} = req.params
- const user = findUserbyId(id)
- if(!user){
-return res.status(400).json({data:{error:"user not found"}})
- }
-jwt.verify(resettoken,"secretkey")
-} catch (error) {
-console.log(error)
-return res.status(400).json({data:{error:"code error"}})
-}
-next();
-})
+// router.get("/reset-password",async (req,res,next)=>{
+// try {    
+//     const {id,resettoken} = req.params
+//  const user = findUserbyId(id)
+//  if(!user){
+// return res.status(400).json({data:{error:"user not found"}})
+//  }
+// jwt.verify(resettoken,"secretkey")
+// } catch (error) {
+// console.log(error)
+// return res.status(400).json({data:{error:"code error"}})
+// }
+// next();
+// })
 
-router.post("/reset-password/:id/:resettoken",async (req,res)=>{
+router.post("/reset-password",async (req,res)=>{
 
     try {
-const user = req.body
+        const {email} = req.body
+        const user = await loginUser(email);
+
 if(user.password === "" ||  user.confirmPassword === ""){
   return res.status(400).json({data:{error:"invalid details"}})  
 }

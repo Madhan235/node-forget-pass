@@ -57,7 +57,7 @@ try {
     const {email} = req.body;
     const user = await loginUser(email);
  if(user === null){
- return res.status(400).json({data:{error:"InValid Email, Please signup !"}})
+ return res.status(400).json({data:{error:"InValid Email, user:user"}})
  }
       const code = Math.round(Math.random()*1000+1111)
       mail(email,code);

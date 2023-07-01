@@ -54,12 +54,12 @@ const user = await loginUser(req.body.email);
 router.post("/forget-password",async (req,res)=>{
 
 try {
-    const {email} = req.body.email;
+    const {email} = req.body;
     const user = await loginUser(email);
- if(!user){
+ if(user === null){
  return res.status(400).json({data:{error:"InValid Email, Please signup !"}})
  }
-      const code = Math.round(Math.random()*10000+1111)
+      const code = Math.round(Math.random()*1000+1111)
       mail(email,code);
       if(!code){
  return res.status(400).json({data:{error:"InValid code"}})

@@ -61,6 +61,9 @@ try {
  }
       const code = Math.round(Math.random()*10000+1111)
       mail(email,code);
+      if(!code){
+ return res.status(400).json({data:{error:"InValid code"}})
+}
    res.status(200).json({data:{code:code,message:"verification email sent"}})   
      
 } catch (error) {

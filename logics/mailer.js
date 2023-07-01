@@ -1,4 +1,3 @@
-import { link } from "fs";
 import nodemailer from "nodemailer";
 export function mail(userEmail,code){
 

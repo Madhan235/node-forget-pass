@@ -16,32 +16,7 @@ app.use(cors());
  app.use("/users",userRouter)
  app.use("/movies",isAuthenticated, contentRouter)
 
-
-//  let transporter = nodemailer.createTransport({
-//     service:"gmail",
-//     auth:{
-//         user:"msouljar@gmail.com",
-//         pass:"yhqilsstocvicqoc"
-//     },
-// });
-
-//  let mailDetails = {
-//     from:"msouljar@gmail.com",
-//     to:"mathanmarquez93@gmail.com",
-//     subject:"nodemailer",
-//     text:"code"
-
-//  }
-
-//  transporter.sendMail(mailDetails, function(err){
-//     if(err){
-//         console.log(err)
-//     }
-//     else{
-//         console.log("email sent successfully")
-//     }
-//  });
-
+ 
 
 // starting the app
 app.listen(9001,()=>{

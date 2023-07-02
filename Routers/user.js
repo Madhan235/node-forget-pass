@@ -72,21 +72,6 @@ try {
 }
 })
 
-// router.get("/reset-password",async (req,res,next)=>{
-// try {    
-//     const {id,resettoken} = req.params
-//  const user = findUserbyId(id)
-//  if(!user){
-// return res.status(400).json({data:{error:"user not found"}})
-//  }
-// jwt.verify(resettoken,"secretkey")
-// } catch (error) {
-// console.log(error)
-// return res.status(400).json({data:{error:"code error"}})
-// }
-// next();
-// })
-
 router.post("/reset-password",async (req,res)=>{
 
     try {
@@ -107,12 +92,16 @@ const salt = await bcrypt.genSalt(10);
 const hashedPassword = await bcrypt.hash(user.password,salt)
 const hashedUser = {...user,password:hashedPassword}
     const result = await updatePassword(user.email,hashedUser)
-    res.status(200).json({data:{newUser:hashedUser,
-        message:" password successfully changed"}})
+    
+    const token = genrateJwtToken(user._id)
+    
+    res.status(200).json({data:{newUser:result,
+        message:" password successfully changed",token:token}})
 
     } catch (error) {
         console.log(error)
         res.status(400).json({data:{error:"code error"}})
     }
 })
+
 export const userRouter = router;

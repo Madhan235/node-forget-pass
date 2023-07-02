@@ -93,7 +93,7 @@ const newhashedPassword = await bcrypt.hash(password,salt)
 const newhashedUser = {...req.body,password:newhashedPassword}
     const result = await updatePassword(email,newhashedUser)
     
-    const token = genrateJwtToken(user._id)
+    const token = genrateJwtToken(email)
     
     res.status(200).json({data:{newUser:result,
         message:" password successfully changed",token:token}})

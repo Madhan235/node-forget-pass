@@ -90,16 +90,18 @@ try {
 router.post("/reset-password",async (req,res)=>{
 
     try {
-        const {email} = req.body
+        const {email,password,confirmPassword} = req.body
         const user = await loginUser(email);
+        console.log(user)
 
-if(user.password === "" ||  user.confirmPassword === ""){
+if(password === "" ||  confirmPassword === ""){
   return res.status(400).json({data:{error:"invalid details"}})  
 }
-if(user.password !== user.confirmPassword) {
+if(password !== confirmPassword) {
   return res.status(400).json({data:{error:"password doesnot match"}})  
 
 }
+
 const salt = await bcrypt.genSalt(10);
 
 const hashedPassword = await bcrypt.hash(user.password,salt)

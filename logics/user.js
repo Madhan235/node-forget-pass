@@ -29,5 +29,5 @@ return client.db("bwd45")
 export function findUserbyId(id){
     return client.db("bwd45")
     .collection("users")
-    .findOne({id_: objectId(id)})
+    .findOne({_id: new objectId(id)})
 }

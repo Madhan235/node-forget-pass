@@ -90,8 +90,8 @@ if(password !== confirmPassword) {
 const salt = await bcrypt.genSalt(10);
 
 const newhashedPassword = await bcrypt.hash(password,salt)
-const newhashedUser = {...req.body,password:newhashedPassword}
-    const result = await updatePassword(email,newhashedUser)
+
+    const result = await updatePassword(email,newhashedPassword)
     
     const token = genrateJwtToken(email)
     
